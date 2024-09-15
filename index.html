@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MotiProcesador de Textos</title>
+    <title>Procesador de Textos</title>
     <!-- Materialize CSS -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
@@ -32,16 +32,30 @@
         height: 300px;
         background-color: #fff;
       }
+      /* Estilo para centrar el logo en el header */
+      .brand-logo.centered-logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      nav ul.right {
+        margin-right: 10px;
+      }
     </style>
   </head>
   <body>
-    <!-- Navbar con menú hamburguesa -->
+    <!-- Navbar con logo centrado y menú hamburguesa -->
     <nav>
       <div class="nav-wrapper">
-        <a href="#" class="brand-logo">MotiEditor</a>
         <a href="#" data-target="mobile-menu" class="sidenav-trigger">
           <i class="material-icons">menu</i>
         </a>
+        <!-- Logo centrado y más grande -->
+        <a href="#" class="brand-logo centered-logo">
+          <img src="logomotiword.png" alt="Logo" style="height: 80px" />
+          <!-- Cambiado a 80px -->
+        </a>
+        <!-- Opciones del menú -->
         <ul class="right hide-on-med-and-down">
           <li><a href="#" id="open-docx">Abrir DOCX</a></li>
           <li><a href="#" id="save-pdf">Guardar como PDF</a></li>
@@ -61,12 +75,25 @@
       <!-- Contenedor del editor -->
       <div id="toolbar-container">
         <span class="ql-formats">
+          <!-- Opciones de negrita, cursiva y subrayado -->
           <button class="ql-bold"></button>
           <!-- Botón de negrita -->
           <button class="ql-italic"></button>
           <!-- Botón de cursiva -->
           <button class="ql-underline"></button>
           <!-- Botón de subrayado -->
+        </span>
+        <span class="ql-formats">
+          <select class="ql-size">
+            <option value="small">Pequeña</option>
+            <!-- Etiqueta en español -->
+            <option selected>Normal</option>
+            <!-- Normal es la opción por defecto -->
+            <option value="large">Grande</option>
+            <!-- Etiqueta en español -->
+            <option value="huge">Muy Grande</option>
+            <!-- Etiqueta en español -->
+          </select>
         </span>
       </div>
       <div id="editor-container"></div>
