@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MotiProcesador de Textos</title>
+    <title>Procesador de Textos</title>
     <!-- Materialize CSS -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
@@ -22,22 +22,23 @@
     <style>
       body {
         display: flex;
-        min-height: 100vh;
         flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
       }
       main {
         flex: 1 0 auto;
-        width: 100%; /* Asegura que el contenedor principal ocupe todo el ancho */
+        width: 100%;
       }
       #editor-container {
         height: 300px;
-        width: 100%; /* Asegura que el editor ocupe el 100% del ancho */
+        width: 100%;
         background-color: #fff;
-        box-sizing: border-box; /* Asegura que el padding se incluya en el ancho */
+        box-sizing: border-box;
       }
       .container {
-        width: 100% !important; /* Asegura que el contenedor no tenga márgenes laterales */
-        padding: 0 15px; /* Ajusta el padding lateral si es necesario */
+        width: 100% !important;
+        padding: 0 15px;
       }
       /* Estilo para centrar el logo en el header */
       .brand-logo.centered-logo {
@@ -45,8 +46,25 @@
         left: 50%;
         transform: translateX(-50%);
       }
-      nav ul.right {
-        margin-right: 10px;
+      nav,
+      footer.page-footer {
+        background-color: indigo !important;
+      }
+      footer {
+        padding-top: 10px;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+      }
+      /* Estilos para el menú hamburguesa */
+      .sidenav {
+        background-color: #b3e5fc; /* Fondo celeste */
+      }
+      .sidenav li {
+        border-bottom: 1px solid #ddd; /* Línea de separación */
+      }
+      .sidenav li:last-child {
+        border-bottom: none; /* Eliminar la línea después del último elemento */
       }
     </style>
   </head>
@@ -57,15 +75,13 @@
         <a href="#" data-target="mobile-menu" class="sidenav-trigger">
           <i class="material-icons">menu</i>
         </a>
-        <!-- Logo centrado y más grande -->
         <a href="#" class="brand-logo centered-logo">
           <img src="logomotiword.png" alt="Logo" style="height: 80px" />
         </a>
-        <!-- Opciones del menú -->
         <ul class="right hide-on-med-and-down">
           <li><a href="#" id="open-docx">Abrir DOCX</a></li>
           <li><a href="#" id="open-txt">Abrir TXT</a></li>
-          <!-- Botón para abrir archivos TXT -->
+          <li><a href="#" id="save-docx">Guardar como DOCX</a></li>
           <li><a href="#" id="save-pdf">Guardar como PDF</a></li>
         </ul>
       </div>
@@ -75,50 +91,50 @@
     <ul class="sidenav" id="mobile-menu">
       <li><a href="#" id="open-docx-mobile">Abrir DOCX</a></li>
       <li><a href="#" id="open-txt-mobile">Abrir TXT</a></li>
-      <!-- Opción en el menú móvil -->
+      <li><a href="#" id="save-docx-mobile">Guardar como DOCX</a></li>
       <li><a href="#" id="save-pdf-mobile">Guardar como PDF</a></li>
     </ul>
 
     <!-- Contenido principal -->
     <main class="container">
-      <h4>MotiProcesador de Textos</h4>
-      <!-- Contenedor del editor -->
+      <h4>Procesador de Textos</h4>
       <div id="toolbar-container">
         <span class="ql-formats">
-          <!-- Opciones de negrita, cursiva y subrayado -->
           <button class="ql-bold"></button>
           <!-- Botón de negrita -->
           <button class="ql-italic"></button>
           <!-- Botón de cursiva -->
           <button class="ql-underline"></button>
           <!-- Botón de subrayado -->
+          <button class="ql-align" value="justify"></button>
+          <!-- Botón de justificar texto -->
           <button class="ql-image"></button>
           <!-- Botón para insertar imágenes -->
         </span>
         <span class="ql-formats">
           <select class="ql-size">
             <option value="small">Pequeña</option>
-            <!-- Etiqueta en español -->
             <option selected>Normal</option>
-            <!-- Normal es la opción por defecto -->
             <option value="large">Grande</option>
-            <!-- Etiqueta en español -->
             <option value="huge">Muy Grande</option>
-            <!-- Etiqueta en español -->
           </select>
         </span>
       </div>
       <div id="editor-container"></div>
       <div class="row">
         <div class="col s12">
-          <input type="file" id="docx-input" style="display: none" />
+          <input
+            type="file"
+            id="docx-input"
+            accept=".docx"
+            style="display: none"
+          />
           <input
             type="file"
             id="txt-input"
             accept=".txt"
             style="display: none"
           />
-          <!-- Input para archivos TXT -->
         </div>
       </div>
     </main>
@@ -128,10 +144,8 @@
       <div class="container">
         <div class="row">
           <div class="col l6 s12">
-            <h5 class="white-text">MotiProcesador de Textos</h5>
-            <p class="grey-text text-lighten-4">
-              Diseñado por Origins Motivations 2024
-            </p>
+            <h6 class="white-text">Diseñado por Origins Motivations 2024</h6>
+            <p class="grey-text text-lighten-4"></p>
           </div>
         </div>
       </div>
@@ -147,34 +161,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
 
     <script>
-      // Inicialización del menú hamburguesa
       document.addEventListener("DOMContentLoaded", function () {
         var elems = document.querySelectorAll(".sidenav");
         var instances = M.Sidenav.init(elems);
       });
 
-      // Inicialización del editor Quill con el toolbar visible
       var quill = new Quill("#editor-container", {
         theme: "snow",
         modules: {
-          toolbar: "#toolbar-container", // Barra de herramientas personalizada
+          toolbar: "#toolbar-container",
         },
       });
 
-      // Función para abrir archivo DOCX
       function openDocxFile() {
         document.getElementById("docx-input").click();
       }
 
-      // Función para abrir archivo TXT
-      function openTxtFile() {
-        document.getElementById("txt-input").click();
-      }
-
-      // Leer el archivo DOCX y mostrar el texto en el editor
       document
         .getElementById("docx-input")
         .addEventListener("change", function (event) {
+          var file = event.target.files[0];
           var reader = new FileReader();
           reader.onload = function (event) {
             var arrayBuffer = reader.result;
@@ -187,37 +193,44 @@
                 console.error("Error leyendo DOCX", err);
               });
           };
-          reader.readAsArrayBuffer(event.target.files[0]);
+          reader.readAsArrayBuffer(file);
         });
 
-      // Leer el archivo TXT y mostrar el texto en el editor
       document
-        .getElementById("txt-input")
-        .addEventListener("change", function (event) {
-          var file = event.target.files[0];
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            var text = e.target.result;
-            quill.setText(text); // Insertar el texto en el editor
-          };
-          reader.readAsText(file);
+        .getElementById("save-docx")
+        .addEventListener("click", function () {
+          const content = quill.getText();
+          const doc = new docx.Document({
+            sections: [
+              {
+                properties: {},
+                children: [
+                  new docx.Paragraph({
+                    text: content,
+                    spacing: { line: 276 },
+                  }),
+                ],
+              },
+            ],
+          });
+
+          docx.Packer.toBlob(doc).then((blob) => {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "documento.docx";
+            link.click();
+            window.URL.revokeObjectURL(url);
+          });
         });
 
-      // Eventos para abrir archivos
       document
         .getElementById("open-docx")
         .addEventListener("click", openDocxFile);
       document
-        .getElementById("open-txt")
-        .addEventListener("click", openTxtFile); // Abrir archivo TXT
-      document
         .getElementById("open-docx-mobile")
         .addEventListener("click", openDocxFile);
-      document
-        .getElementById("open-txt-mobile")
-        .addEventListener("click", openTxtFile); // Abrir archivo TXT
 
-      // Guardar como PDF
       document
         .getElementById("save-pdf")
         .addEventListener("click", function () {
@@ -226,7 +239,6 @@
           doc.save("documento.pdf");
         });
 
-      // Guardar como PDF desde el menú hamburguesa
       document
         .getElementById("save-pdf-mobile")
         .addEventListener("click", function () {
